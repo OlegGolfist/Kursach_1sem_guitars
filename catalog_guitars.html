@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог гитар - Гитарный мир</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="images/logo_test.png" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo_test.png" alt="Гитарный мир">
+                <span>Гитарный мир</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="catalog_guitars.html">Каталог</a></li>
+                    <li><a href="#" class="cart-icon" id="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="catalog-page">
+        <div class="container">
+            <h1 class="catalog-page-title">Каталог гитар</h1>
+            
+            <div class="filters">
+                <div class="filter-group search-group">
+                    <h3 class="filter-title">Поиск</h3>
+                    <input type="text" id="search-input" placeholder="Введите название гитары">
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-title">Тип гитары</h3>
+                    <select id="guitar-type" class="sort-select">
+                        <option value="all">Все типы</option>
+                        <option value="electric">Электрогитары</option>
+                        <option value="acoustic">Акустические гитары</option>
+                        <option value="bass">Бас-гитары</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-title">Цена, руб.</h3>
+                    <div class="price-range">
+                        <input type="number" id="min-price" placeholder="От" min="0">
+                        <span>-</span>
+                        <input type="number" id="max-price" placeholder="До" min="0">
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-title">Сортировка</h3>
+                    <select id="sort-by" class="sort-select">
+                        <option value="default">По умолчанию</option>
+                        <option value="price-asc">По цене (возрастание)</option>
+                        <option value="price-desc">По цене (убывание)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="products-grid" id="products-grid">
+                <!-- Товары будут рендериться через JS -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>О магазине</h3>
+                    <p>Гитарный мир - это интернет-магазин гитар и аксессуаров с 2025 года. Мы предлагаем только качественные инструменты от проверенных производителей.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>г. Минск, ул. Музыкальная, 15</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <span>+375 (44) 7979937</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <span>gitarmir@gmail.com</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Информация</h3>
+                    <ul>
+                        <li><a href="#">Оплата и доставка</a></li>
+                        <li><a href="#">Гарантия и возврат</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                        <li><a href="#">Блог</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Гитарный мир. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно корзины -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <h2>Ваша корзина</h2>
+            <div id="cart-items-container"></div>
+            <div class="cart-total">
+                <p>Итого: <span id="cart-total-price">0</span> Br</p>
+                <button class="btn checkout-btn" onclick="location.href = 'checkout.html';">Оформить заказ</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="data.js"></script>
+</body>
+</html>

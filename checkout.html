@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа - Гитарный мир</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="images/logo_test.png" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo_test.png" alt="Гитарный мир">
+                <span>Гитарный мир</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="catalog_guitars.html">Каталог</a></li>
+                    <li><a href="#" class="cart-icon" id="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="checkout-page">
+        <div class="container">
+            <h1>Оформление заказа</h1>
+            
+            <div class="checkout-container">
+                <div class="order-summary">
+                    <h2>Ваш заказ</h2>
+                    <div id="checkout-items-container"></div>
+                    <div class="order-total">
+                        <p>Итого: <span id="order-total-price">0</span> Br</p>
+                    </div>
+                </div>
+                
+                <div class="checkout-form">
+                    <h2>Данные покупателя</h2>
+                    <form id="checkout-form">
+                        <div class="form-group">
+                            <label for="name">ФИО*</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Телефон*</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Адрес доставки*</label>
+                            <textarea id="address" name="address" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Комментарий к заказу</label>
+                            <textarea id="comment" name="comment" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn submit-order-btn">Подтвердить заказ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>О магазине</h3>
+                    <p>Гитарный мир - это интернет-магазин гитар и аксессуаров с 2025 года. Мы предлагаем только качественные инструменты от проверенных производителей.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>г. Минск, ул. Музыкальная, 15</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <span>+375 (44) 7979937</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <span>gitarmir@gmail.com</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Информация</h3>
+                    <ul>
+                        <li><a href="#">Оплата и доставка</a></li>
+                        <li><a href="#">Гарантия и возврат</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                        <li><a href="#">Блог</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Гитарный мир. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно корзины -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <h2>Ваша корзина</h2>
+            <div id="cart-items-container"></div>
+            <div class="cart-total">
+                <p>Итого: <span id="cart-total-price">0</span> ₽</p>
+                <a href="checkout.html" class="btn checkout-btn">Оформить заказ</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="data.js"></script>
+    <script>
+        // Инициализация корзины при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            renderCheckoutItems();
+            
+            // Инициализация модального окна корзины
+            const cartIcon = document.getElementById('cart-icon');
+            const cartModal = document.getElementById('cart-modal');
+            const closeBtn = document.querySelector('.close');
+
+            if (cartIcon) {
+                cartIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    cartModal.style.display = 'block';
+                    renderCartItems();
+                });
+            }
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    cartModal.style.display = 'none';
+                });
+            }
+
+            window.addEventListener('click', function(e) {
+                if (e.target === cartModal) {
+                    cartModal.style.display = 'none';
+                }
+            });
+
+            // Обработка формы заказа
+            const form = document.getElementById('checkout-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (cart.length === 0) {
+                        alert('Ваша корзина пуста!');
+                        return;
+                    }
+                    
+                    // Здесь можно добавить отправку данных на сервер
+                    alert('Заказ успешно оформлен! Спасибо за покупку!');
+                    cart = [];
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+
+        function renderCheckoutItems() {
+            const container = document.getElementById('checkout-items-container');
+            if (!container) return;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p>Ваша корзина пуста</p>';
+                document.getElementById('order-total-price').textContent = '0';
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="checkout-item">
+                    <img src="${item.image}" alt="${item.name}" class="checkout-item-image">
+                    <div class="checkout-item-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.price.toLocaleString()} Br × ${item.quantity} = ${(item.price * item.quantity).toLocaleString()} Br</p>
+                    </div>
+                </div>
+            `).join('');
+
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('order-total-price').textContent = totalPrice.toLocaleString();
+        }
+    </script>
+</body>
+</html>
