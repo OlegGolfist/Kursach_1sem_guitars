@@ -42,6 +42,33 @@ document.addEventListener('DOMContentLoaded', function() {
         renderCheckoutItems();
         setupCheckoutForm();
     }
+    fetch('footer.xml')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(xmlString => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+            // Создаем HTML-структуру
+            const div = document.createElement('div');
+            div.className = className;
+            
+            const p = document.createElement('p');
+            p.innerHTML = textContent;
+            
+            div.appendChild(p);
+            
+            // Вставляем в DOM
+            const container = document.getElementById('xml-footer-content');
+            if (container) {
+                container.appendChild(div);
+            } else {
+                console.error('Container element not found');
+            }
+        })
 });
 
 // Инициализация модального окна корзины
